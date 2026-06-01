@@ -1,0 +1,10 @@
+dexterous_hand:
+  ros__parameters:
+    mock: true
+    publish_rate_hz: 50
+    joint_names:
+      - thumb_flex
+      - index_flex
+      - middle_flex
+      - ring_flex
+      - little_flex

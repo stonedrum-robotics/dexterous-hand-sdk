@@ -1,0 +1,8 @@
+services:
+  dexterous-hand-sdk:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ..:/workspace/dexterous-hand-sdk
+    command: bash
