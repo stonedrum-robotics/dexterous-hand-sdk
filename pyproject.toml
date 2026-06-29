@@ -11,13 +11,16 @@ requires-python = ">=3.10"
 license = { text = "Apache-2.0" }
 authors = [{ name = "Stonedrum Robotics", email = "info@stonedrum.co" }]
 dependencies = [
-  "numpy>=1.24",
+  "numpy>=1.24,<2.5",
   "scipy>=1.10",
   "pyserial>=3.5",
   "pydantic>=2.0",
 ]
 
 [project.optional-dependencies]
+linkerbot = ["pyserial>=3.5"]
+omnihand = []
+all = ["pyserial>=3.5"]
 dev = [
   "pytest>=8.0",
   "ruff>=0.4",

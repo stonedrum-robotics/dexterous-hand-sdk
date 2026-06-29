@@ -20,6 +20,30 @@ For local development:
 python -m pip install -e ".[dev]"
 ```
 
+## Supported Hardware
+
+The SDK uses a driver abstraction layer. Swapping hardware vendors requires
+changing one line of code while keeping the same high-level `Hand` API.
+
+| Vendor | Product | DOF | Drive type | Interface | Status |
+|---|---|---:|---|---|---|
+| [Linkerbot](https://linkerbot.cn) | L20 / L30 / O20 / O30 | 6-20 | Tendon / linkage / direct-drive | Serial RS-485, CAN FD, ROS 2 | Driver stub; protocol pending vendor confirmation |
+| [AGILINK](https://agilink-ai.com) | OmniHand 3 Ultra-M | 20 | Full direct-drive | CAN FD, RS-485, EtherCAT, ROS 2 | Driver stub; API details pending vendor confirmation |
+| Mock | In-memory test hand | configurable | N/A | Python only | Ready now |
+
+```python
+from dexterous_hand import Hand
+from dexterous_hand.drivers import LinkerbotDriver, OmniHandDriver
+
+# Linkerbot O30
+hand = Hand(LinkerbotDriver(port="/dev/ttyUSB0"))
+
+# AGILINK OmniHand: same Hand API, different driver
+hand = Hand(OmniHandDriver(host="192.168.1.100"))
+```
+
+Custom hardware? Implement [`HandDriver`](dexterous_hand/driver.py) and pass it to `Hand`.
+
 ## Quick Start
 
 ```python
@@ -49,6 +73,7 @@ PYTHONPATH=. python examples/01_basic_joint_control.py
 | Linkerbot L20 Lite | CAN / RS-485 | Planned | Planned | Vendor SDK integration pending |
 | Linkerbot L20 | CAN / RS-485 | Planned | Planned | Vendor SDK integration pending |
 | Linkerbot L30 | CAN FD | Planned | Planned | Vendor SDK integration pending |
+| AGILINK OmniHand 3 Ultra-M | CAN FD, RS-485, EtherCAT, ROS 2 | Planned | Planned | Vendor API confirmation pending |
 | Mock (simulation) | — | ✅ | ✅ | Ready now |
 
 The mock driver is ready for tests, demos, tutorials, and CI. Physical Linkerbot support depends on vendor SDK access and hardware validation; CE certification remains under verification.
