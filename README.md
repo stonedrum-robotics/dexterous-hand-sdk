@@ -78,6 +78,17 @@ PYTHONPATH=. python examples/01_basic_joint_control.py
 
 The mock driver is ready for tests, demos, tutorials, and CI. Physical Linkerbot support depends on vendor SDK access and hardware validation; CE certification remains under verification.
 
+## Roadmap
+
+The Dexterous Hand SDK is expanding beyond hardware control into a full development stack for dexterous manipulation. 
+
+| Module | Target | Description |
+|---|---|---|
+| **Training Data Module** (`dexterous_hand.data`) | Q4 2026 | Load third-party and partner training datasets (multi-modal: pose, tactile, vision) directly into PyTorch/LeRobot-compatible pipelines, with automatic retargeting to supported hardware drivers. |
+| **SDK Benchmarking Module** | Q3 2026 | Standardized performance benchmarking module (repeatability, force calibration, endurance) to evaluate hardware across multiple vendors. |
+
+Interested in early access to the training data module? Contact `info@stonedrum.co`.
+
 ## ROS 2 Quick Start
 
 The ROS 2 package exposes a `dexterous_hand` node that publishes `sensor_msgs/JointState` at 50 Hz in mock mode.
