@@ -1,39 +1,27 @@
-"""Vendor-neutral quickstart for Linkerbot and AGILINK OmniHand.
+"""Synthetic in-memory sequence using draft joint names.
 
-This example shows how swapping the driver is the only change needed to move
-between hardware vendors. Application logic for grasp sequences, teleoperation,
-and data collection can stay identical.
-
-The default ``mock`` backend works without hardware and is safe for CI.
+Only the mock backend is implemented; vendor names are not compatibility claims.
 """
 
 from __future__ import annotations
 
 import argparse
 
-from dexterous_hand import Hand, HandDriver, MockHandDriver
-from dexterous_hand.drivers import LinkerbotDriver, OmniHandDriver
+from dexterous_hand import Hand, MockHandDriver
 from dexterous_hand.drivers.omnihand import OMNIHAND_JOINTS
 
 
 def build_hand(hardware: str) -> Hand:
-    """Construct a :class:`Hand` for the chosen hardware backend."""
-    if hardware == "linkerbot":
-        driver: HandDriver = LinkerbotDriver(port="/dev/ttyUSB0")
-        driver.connect()
-        return Hand(driver)
-    if hardware == "omnihand":
-        driver = OmniHandDriver(host="192.168.1.100")
-        driver.connect()
-        return Hand(driver)
-
+    """Construct a synthetic mock; reject unsupported physical backends."""
+    if hardware != "mock":
+        raise NotImplementedError("Only the mock backend is implemented; no device was opened.")
     driver = MockHandDriver(list(OMNIHAND_JOINTS))
     driver.connect()
     return Hand(driver)
 
 
 def demo_sequence(hand: Hand) -> None:
-    """Read joints, move two fingers, read again, and stop safely."""
+    """Read and update synthetic joint positions, then finish the mock sequence."""
     print("Initial joint states:")
     for state in hand.read_joints():
         print(f"  {state.name}: {state.position_rad:.3f} rad")
@@ -55,7 +43,7 @@ def demo_sequence(hand: Hand) -> None:
 
 def main() -> None:
     """Run the selected backend quickstart."""
-    parser = argparse.ArgumentParser(description="Vendor-neutral hand quickstart")
+    parser = argparse.ArgumentParser(description="In-memory mock hand example")
     parser.add_argument(
         "--hardware",
         choices=["mock", "linkerbot", "omnihand"],
@@ -63,8 +51,10 @@ def main() -> None:
         help="Hardware backend to use.",
     )
     args = parser.parse_args()
+    if args.hardware != "mock":
+        parser.error("Only mock is implemented; vendor adapters have no verified hardware protocol.")
 
-    print(f"Connecting to: {args.hardware}")
+    print(f"Backend: {args.hardware} (in memory)")
     hand = build_hand(args.hardware)
     demo_sequence(hand)
 

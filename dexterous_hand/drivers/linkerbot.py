@@ -1,36 +1,16 @@
-"""Linkerbot hardware driver for L-series and O-series hands.
+"""Unsupported vendor adapter reference.
 
-Supported products
-------------------
-- L20 Lite / L20 / L30 -- tendon or linkage-drive research hands.
-- O20 / O30 -- direct-drive high-DOF hands.
-
-Communication
--------------
-Linkerbot public material lists CAN, RS-485, CAN FD, and ROS support across the
-product line. This stub models a serial RS-485 style connection because it is a
-portable first integration target for Stonedrum Robotics demos.
-
-Communication implementation is pending vendor API confirmation. Tagged
-placeholders identify where Linkerbot-specific protocol bytes will be added
-once the vendor interface is available.
+Joint layouts are unverified draft data. This module implements no vendor
+protocol, device feedback, transport, physical stop or compatibility guarantee.
+Use Hand.mock() for in-memory examples.
 """
 
 from __future__ import annotations
 
-import struct
-import time
-from typing import TYPE_CHECKING
-
 from dexterous_hand.driver import HandDriver
 from dexterous_hand.finger import JointState
 
-if TYPE_CHECKING:
-    import serial
-
-
-# Linkerbot O30: 20 active DOF direct-drive layout.
-# Source: project competitive intelligence and Linkerbot ICRA 2026 notes.
+# Draft reference joint names; not a validated device configuration.
 LINKERBOT_O30_JOINTS: list[str] = [
     "thumb_cmc_abd",
     "thumb_cmc_flex",
@@ -54,7 +34,7 @@ LINKERBOT_O30_JOINTS: list[str] = [
     "wrist_flex",
 ]
 
-# Shorter starter layout for L30-style tendon or linkage-drive integrations.
+# Draft shorter reference layout; not a validated device configuration.
 LINKERBOT_L30_JOINTS: list[str] = [
     "thumb_flex",
     "thumb_abd",
@@ -93,53 +73,44 @@ class LinkerbotDriver(HandDriver):
         self._baud_rate = baud_rate
         self._joint_names = joint_names or list(LINKERBOT_O30_JOINTS)
         self._timeout = timeout
-        self._serial: serial.Serial | None = None
         self._positions: dict[str, float] = {name: 0.0 for name in self._joint_names}
 
     def connect(self) -> None:
-        """Open the serial connection to the hand."""
-        import serial
-
-        self._serial = serial.Serial(
-            port=self._port,
-            baudrate=self._baud_rate,
-            timeout=self._timeout,
+        """Reject unsupported hardware operation before any I/O."""
+        raise NotImplementedError(
+            "LinkerbotDriver has no verified hardware protocol. "
+            "Use Hand.mock() for in-memory examples."
         )
-        # TODO(WO-13): send Linkerbot initialisation handshake / wake command.
-        time.sleep(0.1)
 
     def disconnect(self) -> None:
-        """Close the serial connection."""
-        if self._serial and self._serial.is_open:
-            # TODO(WO-13): send Linkerbot shutdown / safe-state command.
-            self._serial.close()
-        self._serial = None
+        """No transport is opened by this unsupported adapter."""
+        return
 
     def read_joints(self) -> list[JointState]:
-        """Request and return current joint positions from the hand."""
-        self._require_connected()
-        # TODO(WO-13): send Linkerbot joint-state request frame and parse bytes.
-        return [JointState(name=name, position_rad=pos) for name, pos in self._positions.items()]
+        """Reject unsupported hardware operation before any I/O."""
+        raise NotImplementedError(
+            "LinkerbotDriver has no verified hardware protocol. "
+            "Use Hand.mock() for in-memory examples."
+        )
 
     def command_positions(self, positions_rad: dict[str, float]) -> None:
-        """Send a joint position command to the hand."""
-        self._require_connected()
-        unknown = set(positions_rad) - set(self._positions)
-        if unknown:
-            raise KeyError(f"Unknown joints for Linkerbot: {sorted(unknown)}")
-
-        self._positions.update(positions_rad)
-        # TODO(WO-13): encode positions_rad into a Linkerbot binary frame.
-        _placeholder_frame = struct.pack(
-            f"{len(self._joint_names)}f",
-            *(self._positions[name] for name in self._joint_names),
+        """Reject unsupported hardware operation before any I/O."""
+        raise NotImplementedError(
+            "LinkerbotDriver has no verified hardware protocol. "
+            "Use Hand.mock() for in-memory examples."
         )
 
     def stop(self) -> None:
-        """Send an immediate-stop command to the hand."""
-        self._require_connected()
+        """Reject unsupported hardware operation before any I/O."""
+        raise NotImplementedError(
+            "LinkerbotDriver has no verified hardware protocol. "
+            "Use Hand.mock() for in-memory examples."
+        )
         # TODO(WO-13): send Linkerbot emergency-stop frame.
 
     def _require_connected(self) -> None:
-        if self._serial is None or not self._serial.is_open:
-            raise RuntimeError("LinkerbotDriver is not connected. Call connect() first.")
+        """Reject unsupported hardware operation before any I/O."""
+        raise NotImplementedError(
+            "LinkerbotDriver has no verified hardware protocol. "
+            "Use Hand.mock() for in-memory examples."
+        )

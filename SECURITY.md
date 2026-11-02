@@ -1,31 +1,31 @@
 # Security Policy
 
-## Supported Versions
+## Scope and supported code
 
-Security updates are provided for the latest released version of public SDK packages, ROS 2 examples, and documentation. If you are using an older commit for a lab integration, include the exact commit SHA in your report so maintainers can assess whether the issue still applies.
+This policy covers the code, examples and documentation in the Stonedrum Robotics public repositories, which are early-stage mock-mode and reference material. Only the current `main` branch of each repository is considered for fixes. Maintenance of earlier commits, releases or forks is not promised. If you are running an older commit, include its SHA in your report.
 
-## Responsible Disclosure
+## Reporting a vulnerability
 
-Please report suspected vulnerabilities privately to `info@stonedrum.co`. Do not open a public issue for vulnerabilities, command-injection paths, unsafe motion triggers, or limit-bypass behavior until maintainers have reviewed the report.
+Please report suspected vulnerabilities privately by email to `info@stonedrum.co`, starting the subject line with `Security:`. This is the general contact for Stonedrum Robotics; no response time is published.
 
-Include:
+Do not open a public issue or pull request for vulnerabilities, command-injection paths, unsafe-motion triggers or limit-bypass behaviour until the report has been reviewed and a way forward has been agreed.
 
-- Affected repository, package version, and commit SHA.
-- Affected hand model, simulator, or mock-mode path.
-- Operating system, Python version, and ROS 2 distribution.
-- Description of the vulnerability or unsafe behavior.
-- Reproduction steps with the smallest possible script, launch file, or log.
-- Expected impact, including whether physical motion, data exposure, or denial of service is possible.
-- Any suggested mitigation.
+Please include:
 
-## Response SLA
+- The affected repository, package version and commit SHA.
+- The affected component, and whether it was mock mode, a simulator or other hardware or software.
+- Operating system, Python version and, if relevant, ROS 2 distribution.
+- A description of the vulnerability or unsafe behaviour.
+- The smallest reproduction you can give: script, launch file or trimmed output.
+- The impact you expect, such as unexpected motion, data exposure or denial of service.
+- Any mitigation you suggest.
 
-We aim to acknowledge security reports within 72 hours. After acknowledgement, maintainers will triage severity, ask for any missing reproduction details, and coordinate a fix or mitigation plan before public disclosure.
+Please do not send credentials, tokens, customer or supplier data, private logs or recordings. Redact them before sending.
 
-## Hardware Safety Issues
+## What to expect
 
-Reports involving unexpected physical motion, emergency-stop bypass, joint-limit bypass, unsafe calibration, or command execution from untrusted input are treated as security and safety issues. Include whether the behavior was observed on real hardware or in mock/simulation mode.
+Maintainers may ask for further detail. No acknowledgement or fix timeline is published, and none is guaranteed. If you plan to disclose publicly, please say so in your first message and allow reasonable time for a response.
 
-## Disclosure Timeline
+## Physical-safety concerns
 
-Please give maintainers a reasonable remediation window before public disclosure. If the issue is actively exploited or creates immediate physical risk, state that clearly in the first email subject line.
+If equipment or people may be at immediate risk, stop operation and follow the equipment manufacturer's emergency-stop and safety procedures first. Email is not an emergency channel. Software behaviour that could cause unexpected motion, or that bypasses limits, can still be reported through the private route above. Say whether you saw it in mock mode, in simulation or on real hardware. These repositories do not establish hardware integration unless a repository README says so.
