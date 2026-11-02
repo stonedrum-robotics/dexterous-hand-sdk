@@ -6,7 +6,6 @@ from dexterous_hand.driver import HandDriver, MockHandDriver
 from dexterous_hand.finger import JointState
 from dexterous_hand.grasp_library import GraspLibrary
 
-
 DEFAULT_JOINTS = [
     "thumb_flex",
     "index_flex",
@@ -24,7 +23,7 @@ class Hand:
         self.grasps = grasp_library or GraspLibrary()
 
     @classmethod
-    def mock(cls) -> "Hand":
+    def mock(cls) -> Hand:
         """Create a mock hand suitable for examples and tests."""
         driver = MockHandDriver(DEFAULT_JOINTS)
         driver.connect()
@@ -44,10 +43,19 @@ class Hand:
         self.move_joints(pose.joint_positions_rad)
 
     def open(self) -> None:
-        """Open the hand to a neutral pose."""
+        """Request zero targets for the backend's reported joints.
+
+        The mock resets stored positions; unsupported vendor adapters raise
+        NotImplementedError without reading or commanding a physical device.
+        """
         joints = {state.name: 0.0 for state in self.read_joints()}
         self.move_joints(joints)
 
     def stop(self) -> None:
-        """Stop motion immediately."""
+        """Request the backend-specific stop operation.
+
+        The in-memory mock performs no physical action. Unsupported vendor
+        adapters raise NotImplementedError; this API provides no emergency-stop
+        guarantee for a physical device.
+        """
         self.driver.stop()

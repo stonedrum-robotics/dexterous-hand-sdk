@@ -26,7 +26,12 @@ class HandDriver(ABC):
 
     @abstractmethod
     def stop(self) -> None:
-        """Stop motion immediately where the hardware supports it."""
+        """Request backend-specific stopping behavior.
+
+        The in-memory mock has no physical action. Unsupported vendor adapters
+        raise NotImplementedError. This interface does not guarantee a physical
+        emergency stop.
+        """
 
 
 class MockHandDriver(HandDriver):
@@ -54,6 +59,7 @@ class MockHandDriver(HandDriver):
         self._positions.update(positions_rad)
 
     def stop(self) -> None:
+        """Check mock connection state without any physical action."""
         self._require_connected()
 
     def _require_connected(self) -> None:

@@ -1,31 +1,29 @@
 # Support
 
-## GitHub Issues
+## Reporting a problem or requesting a feature
 
-Use GitHub Issues for reproducible bugs and feature requests. Include enough detail for another engineer to reproduce the behavior:
+Use GitHub Issues for reproducible bugs, documentation problems and feature requests. Please include:
 
-- Repository and commit SHA or package version.
-- Operating system, Python version, and ROS 2 distribution.
-- Hand model, robot arm, or simulator involved.
-- Minimal command, launch file, or script.
-- Logs, screenshots, or terminal output when helpful.
+- The repository and the commit SHA or package version.
+- Operating system, Python version and, if relevant, ROS 2 distribution.
+- What you ran it on: the in-memory mock, a simulator, or other hardware or software, and which.
+- The smallest command, launch file or script that reproduces the problem.
+- The relevant part of the output, trimmed.
 
-## GitHub Discussions
+Issues are public. Please do not post credentials, tokens, customer or supplier information, private logs, serial numbers, network addresses, or recordings of people or facilities. Remove or replace them first. A short redacted excerpt is more useful than a full log.
 
-Use GitHub Discussions for usage questions, integration help, API design proposals, and planning conversations that are not yet reproducible bugs. Discussions are a good place to ask about ROS 2 setup, mock-mode examples, MoveIt 2 integration, and arm-specific mounting approaches.
+## Questions
 
-## Commercial Support
+GitHub Discussions are not enabled for these repositories. If you have a usage question rather than a bug, open an issue that describes what you were trying to do and what you tried, or write to the contact below.
 
-For commercial support, training, demos, procurement, or integration projects, contact `info@stonedrum.co`.
+## Scope
 
-Commercial inquiries can include:
+These repositories hold open-source Python code, mock-mode examples and reference documents. Unless a repository README says otherwise, they do not establish hardware compatibility, a supported-device list or a maintained support service.
 
-- Linkerbot L20 Lite, L20, or L30 evaluation.
-- ROS 2 integration support.
-- Universal Robots, Franka, or KUKA mounting guidance.
-- Training workshops for academic or industrial teams.
-- Custom grasp-library, simulation, or calibration work.
+## Contact
 
-## Response Time
+For a component, integration or other project question that does not belong in a public issue, write to `info@stonedrum.co`. This is the general contact for Stonedrum Robotics. Describe your hardware, software environment and the outcome you are after. No response time is published.
 
-This is a small team - we aim to respond within 5 business days. Safety-critical or security-sensitive reports should be sent privately through the security process in `SECURITY.md`.
+## Security and safety
+
+Do not report vulnerabilities or unsafe behaviour in a public issue. Follow the security policy (`SECURITY.md`).
